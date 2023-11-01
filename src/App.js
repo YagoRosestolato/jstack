@@ -1,9 +1,14 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
+
 import Post from "./Post";
 import Header from "./Header";
+import { ThemeProvider } from './ThemeContext'
+
 
 
 export default function App() {
+
+
   
     const [posts, setPosts] = useState([
       { id: Math.random(), title: 'Titulo 01', subtitle: 'Subtitulo 01', likes: 20, read:false },
@@ -11,6 +16,9 @@ export default function App() {
       { id: Math.random(), title: 'Titulo 03', subtitle: 'Subtitulo 03', likes: 50, read:false },
       { id: Math.random(), title: 'Titulo 04', subtitle: 'Subtitulo 04', likes: 20, read:false },
     ]);
+
+
+
     function handleRefresh(){
       setPosts((prevState)=>[
         ...prevState,
@@ -31,22 +39,23 @@ export default function App() {
     }
 
   return (
-    <>
-      <Header title='Blog do Jstack'>
-        <h2>Uma string qualquer</h2>
+    <ThemeProvider>
+      <Header>
+        <h2>Posts da semana</h2>
+        <button onClick={handleRefresh}>Atualizar</button>
       </Header>
-      <button onClick={handleRefresh}>Atualizar</button>
+      
       <hr />
 
       {posts.map(post => (
         <Post
           key={post.id}
           onRemove={handleRemovePost}
-          likes={post.likes}
           post={post}
+
         />
       ))}
 
-    </>
+    </ThemeProvider>
   )
 }
